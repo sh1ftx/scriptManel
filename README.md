@@ -32,7 +32,7 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
 
 Siga os passos abaixo para baixar e configurar o projeto em sua máquina:
 
-1. **Clone o repositório:**
+1. **Clone o repositório e entre na pasta:**
    ```bash
    git clone [https://github.com/MichasBaiano/cadastro-amigos-jogos](https://github.com/MichasBaiano/cadastro-amigos-jogos)
    cd nome-da-pasta
@@ -72,10 +72,10 @@ Ao acessar o sistema, será solicitado o login. Utilize as credenciais padrão d
 * `server.js`: Arquivo principal da aplicação.
 
 ## 👥 Autores
-**Ananias Carlos**
-**Davi Carreiro**
-**Michel Junior**
-**Sidney Nascimento**
+**Ananias Carlos** <br>
+**Davi Carreiro**  <br>
+**Michel Junior**  <br>
+**Sidney Nascimento**  <br>
 * Curso: Análise e Desenvolvimento de Sistemas (ADS)
 * Instituição: IFPI - Campus Pedro II
 
