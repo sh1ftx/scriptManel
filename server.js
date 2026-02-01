@@ -4,6 +4,7 @@ const express = require("express");
 const path = require("path");
 const session = require("express-session");
 const { Amigo, Jogo, Emprestimo } = require("./models");
+const { Op } = require("sequelize");
 
 const app = express();
 const PORT = 3005;
@@ -106,8 +107,6 @@ app.get("/amigos/editar/:id", async (req, res) => {
 app.post("/amigos/editar/:id", async (req, res) => {
     const { id } = req.params;
     const { nome, email } = req.body;
-
-    const Op = Amigo.sequelize.Sequelize.Op;
 
     const invalidEmail = await Amigo.findOne({
         where: {
