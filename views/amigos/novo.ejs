@@ -16,6 +16,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
 
             background: linear-gradient(
                 135deg,
@@ -128,6 +129,12 @@
 
 <body>
 
+    <% if (erro) { %>
+        <div class="alert alert-warning mt-3">
+            <strong>Atenção:</strong> <%= erro %>
+        </div>
+    <% } %>
+
     <div class="form-card">
         <div class="text-center mb-4">
             <h3 class="form-title">Cadastrar Novo Amigo</h3>
@@ -137,7 +144,7 @@
         <form action="/amigos/novo" method="POST">
             <div class="mb-3">
                 <label class="form-label">Nome</label>
-                <input type="text" name="nome" class="form-control" required>
+                <input type="text" name="nome" class="form-control" value="<%= nome %>">
             </div>
 
             <div class="mb-4">
