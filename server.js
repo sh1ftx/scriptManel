@@ -72,6 +72,12 @@ app.get("/amigos", async (req, res) => {
     res.render("amigos/index", { amigos, erro: null });
 });
 
+// REST amigos
+app.get("/api/amigos", async (req, res) => {
+    const amigos = await Amigo.findAll({ order: [["id", "ASC"]] });
+    res.json(amigos);
+});
+
 app.get("/amigos/novo", (req, res) => {
     res.render("amigos/novo", { erro: null, nome: "" });
 });
