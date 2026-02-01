@@ -1,3 +1,5 @@
+// pacotes configs
+
 {
   "development": {
     "dialect": "sqlite",
