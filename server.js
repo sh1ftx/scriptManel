@@ -14,9 +14,7 @@ const PORT = 3005;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// 🚨 ESSENCIAL: arquivos estáticos (CSS, imagens, JS)
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(express.urlencoded({ extended: true }));
 
 /* =======================
@@ -70,7 +68,7 @@ app.get('/', (req, res) => res.redirect('/amigos'));
 ======================= */
 app.get('/amigos', async (req, res) => {
   const amigos = await Amigo.findAll({ order: [['id', 'ASC']] });
-  res.render('amigos/index', { amigos });
+  res.render('amigos/index', { amigos, erro: null });
 });
 
 app.get('/amigos/novo', (req, res) => {
@@ -95,9 +93,23 @@ app.post('/amigos/editar/:id', async (req, res) => {
   res.redirect('/amigos');
 });
 
+/* 🔥 DELETE COM TRATAMENTO (SEM CRASH) */
 app.post('/amigos/excluir/:id', async (req, res) => {
-  await Amigo.destroy({ where: { id: req.params.id } });
-  res.redirect('/amigos');
+  const id = req.params.id;
+
+  try {
+    await Amigo.destroy({ where: { id } });
+    return res.redirect('/amigos');
+  } catch (error) {
+    console.error(error);
+
+    const amigos = await Amigo.findAll({ order: [['id', 'ASC']] });
+
+    return res.render('amigos/index', {
+      amigos,
+      erro: 'Não é possível apagar este amigo porque existem jogos vinculados a ele.'
+    });
+  }
 });
 
 /* =======================
@@ -108,7 +120,9 @@ app.get('/jogos', async (req, res) => {
     include: [{ model: Amigo, as: 'dono' }],
     order: [['id', 'ASC']]
   });
-  res.render('jogos/index', { jogos });
+
+  // ✅ ADIÇÃO: erro sempre definido
+  res.render('jogos/index', { jogos, erro: null });
 });
 
 app.get('/jogos/novo', async (req, res) => {
@@ -155,9 +169,24 @@ app.post('/jogos/editar/:id', async (req, res) => {
   res.redirect('/jogos');
 });
 
+/* 🔥 DELETE JOGO COM TRATAMENTO (PADRÃO PROFISSIONAL) */
 app.post('/jogos/excluir/:id', async (req, res) => {
-  await Jogo.destroy({ where: { id: req.params.id } });
-  res.redirect('/jogos');
+  try {
+    await Jogo.destroy({ where: { id: req.params.id } });
+    return res.redirect('/jogos');
+  } catch (error) {
+    console.error(error);
+
+    const jogos = await Jogo.findAll({
+      include: [{ model: Amigo, as: 'dono' }],
+      order: [['id', 'ASC']]
+    });
+
+    return res.render('jogos/index', {
+      jogos,
+      erro: 'Não é possível apagar este jogo porque ele possui empréstimos vinculados.'
+    });
+  }
 });
 
 /* =======================
@@ -202,5 +231,5 @@ app.post('/emprestimos/excluir/:id', async (req, res) => {
    SERVER
 ======================= */
 app.listen(PORT, () =>
-  console.log(`🚀 Servidor rodando em http://localhost:${PORT}`)
+  console.log(`Funfando em http://localhost:${PORT}`)
 );
