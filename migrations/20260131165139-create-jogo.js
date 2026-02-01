@@ -1,22 +1,45 @@
+// 20260131165139-create-jogo.js
 'use strict';
+
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Jogo', {
-      id: { allowNull: false, autoIncrement: true, primaryKey: true, type: Sequelize.INTEGER },
-      titulo: { allowNull: false, type: Sequelize.STRING },
-      plataforma: { allowNull: false, type: Sequelize.STRING },
-      amigoId: {
-      allowNull: false,
-      type: Sequelize.INTEGER,
-      references: { model: 'Amigo', key: 'id' },
-      onUpdate: 'CASCADE',
-      onDelete: 'RESTRICT'
+  up: async (queryInterface, Sequelize) => {
+    return queryInterface.createTable('Jogo', {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
       },
-      createdAt: { allowNull: false, type: Sequelize.DATE },
-      updatedAt: { allowNull: false, type: Sequelize.DATE }
- });
- },
- async down(queryInterface, Sequelize) {
-  await queryInterface.dropTable('Jogo');
- }
+      titulo: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      plataforma: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      amigoId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Amigo',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT'
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false
+      }
+    });
+  },
+
+  down: async (queryInterface, Sequelize) => {
+    return queryInterface.dropTable('Jogo');
+  }
 };
