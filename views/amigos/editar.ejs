@@ -17,6 +17,7 @@
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            flex-direction: column;
 
             background: linear-gradient(
                 135deg,
@@ -118,6 +119,12 @@
 </head>
 
 <body>
+
+    <% if (erro) { %>
+        <div class="alert alert-warning mt-3">
+            <strong>Atenção:</strong> <%= erro %>
+        </div>
+    <% } %>
 
     <div class="glass-card">
         <h2 class="title">Editar Amigo</h2>
