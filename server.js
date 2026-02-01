@@ -51,6 +51,15 @@ app.get("/jogos", async (req, res) => {
     res.render("jogos/index", { jogos });
 });
 
+// REST jogos
+app.get("/api/jogos", async (req, res) => {
+        const jogos = await Jogo.findAll({
+            include: [{ model: Amigo, as: "dono" }],
+            order: [["id", "ASC"]],
+        });
+        res.json(jogos); 
+});
+
 app.get("/jogos/novo", async (req, res) => {
     const amigos = await Amigo.findAll({ order: [["nome", "ASC"]] });
     res.render("jogos/novo", { amigos });
