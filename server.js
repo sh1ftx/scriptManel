@@ -46,7 +46,7 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   const { email, senha } = req.body;
 
-  if (email === 'admin' && senha === 'admin') {
+  if (email === 'adm' && senha === '123') {
     req.session.usuarioLogado = true;
     return res.redirect('/amigos');
   }
