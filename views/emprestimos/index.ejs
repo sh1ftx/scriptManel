@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Empréstimos • Sistema</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 3rem 2rem;
+
+            background: linear-gradient(
+                135deg,
+                #e8f8f5,
+                #d1f2eb,
+                #b9fbc0
+            );
+            background-size: 300% 300%;
+            animation: gradientMove 12s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .page-container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        /* Título */
+        .page-title {
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            background: linear-gradient(
+                90deg,
+                #4e9f8f,
+                #6fd3b2,
+                #9be7b1
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        /* Ações topo */
+        .top-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 1.5rem 0 2rem;
+        }
+
+        .btn-soft {
+            padding: 0.55rem 1.1rem;
+            border-radius: 14px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #355f57;
+            text-decoration: none;
+
+            background: rgba(255, 255, 255, 0.75);
+            transition: all 0.25s ease;
+        }
+
+        .btn-soft:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-1px);
+            color: #1f4037;
+        }
+
+        /* Botão principal */
+        .btn-primary-soft {
+            background: linear-gradient(
+                135deg,
+                #7fdac1,
+                #b9fbc0
+            );
+            border: none;
+            color: #1f4037;
+            font-weight: 600;
+        }
+
+        /* hover corrigido */
+        .btn-soft.btn-primary-soft:hover {
+            background: linear-gradient(
+                135deg,
+                #6fd3b2,
+                #9be7b1
+            );
+            color: #1f4037;
+            box-shadow: 0 8px 22px rgba(63, 185, 140, 0.45);
+        }
+
+        /* Card */
+        .glass-card {
+            padding: 2rem;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, 0.12),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Tabela */
+        .table {
+            margin-top: 1rem;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .table thead th {
+            border: none;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #5c7f78;
+        }
+
+        .table tbody tr {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 14px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .table tbody td {
+            border: none;
+            padding: 0.75rem;
+            vertical-align: middle;
+            color: #355f57;
+        }
+
+        .table tbody tr td:first-child {
+            border-radius: 14px 0 0 14px;
+        }
+
+        .table tbody tr td:last-child {
+            border-radius: 0 14px 14px 0;
+        }
+
+        /* Status */
+        .badge-open {
+            background: linear-gradient(
+                135deg,
+                #c1fba4,
+                #7fdac1
+            );
+            color: #245c4f;
+            border-radius: 10px;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* Botão excluir */
+        .btn-delete {
+            background: linear-gradient(
+                135deg,
+                #ff9a9e,
+                #fad0c4
+            );
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 0.35rem 0.7rem;
+            font-size: 0.75rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-delete:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(255, 154, 158, 0.45);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <h1 class="page-title">Lista de Empréstimos</h1>
+
+    <div class="top-actions">
+        <a href="/emprestimos/novo" class="btn-soft btn-primary-soft">+ Novo Empréstimo</a>
+        <a href="/amigos" class="btn-soft">Amigos</a>
+        <a href="/jogos" class="btn-soft">Jogos</a>
+    </div>
+
+    <div class="glass-card">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Jogo</th>
+                    <th>Quem pegou</th>
+                    <th>Data Início</th>
+                    <th>Data Fim</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% emprestimos.forEach(emp => { %>
+                <tr>
+                    <td><%= emp.id %></td>
+                    <td><%= emp.jogo ? emp.jogo.titulo : 'Jogo excluído' %></td>
+                    <td><%= emp.amigo ? emp.amigo.nome : 'Amigo excluído' %></td>
+                    <td><%= emp.dataInicio %></td>
+                    <td>
+                        <% if (emp.dataFim) { %>
+                            <%= emp.dataFim %>
+                        <% } else { %>
+                            <span class="badge-open">Em aberto</span>
+                        <% } %>
+                    </td>
+                    <td>
+                        <form action="/emprestimos/excluir/<%= emp.id %>" method="POST"
+                              onsubmit="return confirm('Tem certeza?')">
+                            <button type="submit" class="btn-delete">
+                                Devolver
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

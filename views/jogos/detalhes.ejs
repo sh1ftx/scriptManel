@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Jogo • Sistema</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 3rem 2rem;
+
+            background: linear-gradient(
+                135deg,
+                #fbc2eb,
+                #a6c1ee,
+                #b5ead7
+            );
+            background-size: 300% 300%;
+            animation: gradientMove 12s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .page-container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .page-title {
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            background: linear-gradient(90deg, #7f7fd5, #86a8e7, #91eae4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-card {
+            margin-top: 2rem;
+            padding: 2rem;
+
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, 0.12),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+        }
+
+        .game-title {
+            font-weight: 700;
+            font-size: 1.4rem;
+            background: linear-gradient(90deg, #f6d365, #fda085);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .game-meta {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .game-meta strong {
+            color: #444;
+        }
+
+        /* Histórico */
+        .section-title {
+            margin-top: 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .table {
+            margin-top: 1rem;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .table thead th {
+            border: none;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #666;
+        }
+
+        .table tbody tr {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 14px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .table tbody td {
+            border: none;
+            padding: 0.75rem;
+        }
+
+        .table tbody tr td:first-child {
+            border-radius: 14px 0 0 14px;
+        }
+
+        .table tbody tr td:last-child {
+            border-radius: 0 14px 14px 0;
+        }
+
+        .badge-open {
+            background: linear-gradient(135deg, #a1ffce, #faffd1);
+            color: #444;
+            border-radius: 10px;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .alert {
+            margin-top: 1rem;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid #ddd;
+            color: #555;
+        }
+
+        .btn-back {
+            margin-top: 2.5rem;
+            display: inline-block;
+            padding: 0.6rem 1.4rem;
+
+            border-radius: 16px;
+            border: none;
+            text-decoration: none;
+            font-weight: 500;
+            color: #555;
+
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid #ddd;
+            transition: all 0.25s ease;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <h1 class="page-title">Detalhes do Jogo</h1>
+
+    <div class="glass-card">
+        <h2 class="game-title"><%= jogo.titulo %></h2>
+
+        <div class="game-meta mt-3">
+            <p>
+                <strong>Plataforma:</strong> <%= jogo.plataforma %><br>
+                <strong>Dono:</strong> <%= jogo.dono.nome %> (<%= jogo.dono.email %>)<br>
+                <strong>Cadastrado em:</strong> <%= jogo.createdAt.toLocaleDateString() %>
+            </p>
+        </div>
+    </div>
+
+    <h3 class="section-title">Histórico de Empréstimos</h3>
+
+    <% if (jogo.emprestimos && jogo.emprestimos.length > 0) { %>
+        <div class="glass-card">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Quem pegou</th>
+                        <th>Data Início</th>
+                        <th>Data Devolução</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% jogo.emprestimos.forEach(emp => { %>
+                        <tr>
+                            <td><%= emp.amigo.nome %></td>
+                            <td><%= emp.dataInicio %></td>
+                            <td>
+                                <% if (emp.dataFim) { %>
+                                    <%= emp.dataFim %>
+                                <% } else { %>
+                                    <span class="badge-open">Em aberto</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    <% } else { %>
+        <div class="alert">
+            Este jogo nunca foi emprestado.
+        </div>
+    <% } %>
+
+    <a href="/jogos" class="btn-back">← Voltar</a>
+
+</div>
+
+</body>
+</html>
