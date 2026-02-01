@@ -93,7 +93,7 @@ app.post('/amigos/editar/:id', async (req, res) => {
   res.redirect('/amigos');
 });
 
-/* 🔥 DELETE COM TRATAMENTO (SEM CRASH) */
+/* DELETE COM TRATAMENTO */
 app.post('/amigos/excluir/:id', async (req, res) => {
   const id = req.params.id;
 
@@ -121,8 +121,17 @@ app.get('/jogos', async (req, res) => {
     order: [['id', 'ASC']]
   });
 
-  // ✅ ADIÇÃO: erro sempre definido
   res.render('jogos/index', { jogos, erro: null });
+});
+
+// REST jogos
+app.get("/api/jogos", async (req, res) => {
+    const jogos = await Jogo.findAll({
+        include: [{ model: Amigo, as: "dono" }],
+        order: [["id", "ASC"]],
+    });
+
+    res.json(jogos); 
 });
 
 app.get('/jogos/novo', async (req, res) => {
@@ -169,7 +178,7 @@ app.post('/jogos/editar/:id', async (req, res) => {
   res.redirect('/jogos');
 });
 
-/* 🔥 DELETE JOGO COM TRATAMENTO (PADRÃO PROFISSIONAL) */
+/*  DELETE JOGO COM TRATAMENTO */
 app.post('/jogos/excluir/:id', async (req, res) => {
   try {
     await Jogo.destroy({ where: { id: req.params.id } });
