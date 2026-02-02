@@ -1,3 +1,23 @@
+# Ludoteca: Sistema de Gestão de Acervo Lúdico
+
+## Documentação técnica acadêmica orientada por normas de engenharia de software  
+
+Projeto desenvolvido para fins **didáticos e avaliativos** na disciplina *Programação para Internet II*  
+Instituição: IFPI – Campus Pedro II  
+Professor responsável: Manuel Gonçalves da Silva Neto  
+
+## 👥 Equipe e Atribuições
+
+- Kayky Rodrigues Silva: Líder da equipe, organização das tarefas e formatação da apresentação.
+- KaykI Ivan: Criação do repositório, base do projeto e orientação técnica/estilização.
+- Vinycius Huellyson: Implementação da lógica de verificação de duplicidade.
+- Gleison de Oliveira: Desenvolvimento do serviço REST (JSON).
+- Lincoln César: Implementação da página de detalhes de registros.
+- Fernando da Silva: Auxílio na criação do relatório em PDF.
+- Ananias Carlos: Desenvolvimento do sistema de login simples.
+
+---
+
 ## Informações do Projeto
 
 ![status](https://img.shields.io/badge/status-concluído-9AD0C2?style=for-the-badge)
@@ -30,23 +50,6 @@
 ![REST](https://img.shields.io/badge/API-REST-EAE4E9?style=for-the-badge)
 ![PDF](https://img.shields.io/badge/relatórios-PDF-E5989B?style=for-the-badge)
 ![CRUD](https://img.shields.io/badge/operações-CRUD-BEE1E6?style=for-the-badge)
-# Ludoteca: Sistema de Gestão de Acervo Lúdico
-
-## Documentação técnica acadêmica orientada por normas de engenharia de software  
-
-Projeto desenvolvido para fins **didáticos e avaliativos** na disciplina *Programação para Internet II*  
-Instituição: IFPI – Campus Pedro II  
-Professor responsável: Manuel Gonçalves da Silva Neto  
-
-## 👥 Equipe e Atribuições
-
-- Kayky Rodrigues Silva: Líder da equipe, organização das tarefas e formatação da apresentação.
-- KaykI Ivan: Criação do repositório, base do projeto e orientação técnica/estilização.
-- Vinycius Huellyson: Implementação da lógica de verificação de duplicidade.
-- Gleison de Oliveira: Desenvolvimento do serviço REST (JSON).
-- Lincoln César: Implementação da página de detalhes de registros.
-- Fernando da Silva: Auxílio na criação do relatório em PDF.
-- Ananias Carlos: Desenvolvimento do sistema de login simples.
 
 ---
 
