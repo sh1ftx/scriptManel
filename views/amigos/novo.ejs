@@ -144,12 +144,12 @@
         <form action="/amigos/novo" method="POST">
             <div class="mb-3">
                 <label class="form-label">Nome</label>
-                <input type="text" name="nome" class="form-control" value="<%= nome %>">
+                <input type="text" name="nome" class="form-control" value="<%= nome %>" required>
             </div>
 
             <div class="mb-4">
                 <label class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" required>
+                <input type="email" name="email" class="form-control" value="<%= email %>" required>
             </div>
 
             <div class="d-grid gap-3">
