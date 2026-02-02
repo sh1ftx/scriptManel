@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Consumo Backend Completo • EJS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .data-column { font-size: 0.8rem; color: #666; }
+        .badge-id { background: #eee; color: #333; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; }
+    </style>
+</head>
+<body class="p-5" style="background: #f0f2f5;">
+
+    <div class="container-fluid bg-white p-4 rounded shadow">
+        <h1 class="mb-4">Jogos (Dados Completos da API)</h1>
+        
+        <table class="table table-hover border">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID Jogo</th>
+                    <th>Título</th>
+                    <th>Plataforma</th>
+                    <th>ID Amigo</th>
+                    <th>Dono (Nome/Email)</th>
+                    <th>Criado em</th>
+                    <th>Última Atualização</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% jogos.forEach(jogo => { %>
+                    <tr>
+                        <td><span class="badge-id">#<%= jogo.id %></span></td>
+                        <td><strong><%= jogo.titulo %></strong></td>
+                        <td><span class="badge bg-info text-dark"><%= jogo.plataforma %></span></td>
+                        <td><%= jogo.amigoId %></td>
+                        <td>
+                            <% if(jogo.dono) { %>
+                                <strong><%= jogo.dono.nome %></strong><br>
+                                <small class="text-muted"><%= jogo.dono.email %></small>
+                            <% } else { %>
+                                <span class="text-danger">Sem dono</span>
+                            <% } %>
+                        </td>
+                        <td class="data-column">
+                            <%= new Date(jogo.createdAt).toLocaleString('pt-BR') %>
+                        </td>
+                        <td class="data-column">
+                            <%= new Date(jogo.updatedAt).toLocaleString('pt-BR') %>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        
+        <div class="mt-3">
+            <a href="/jogos" class="btn btn-secondary">Voltar</a>
+        </div>
+    </div>
+
+</body>
+</html>
