@@ -7,161 +7,163 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        * {
-            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-        }
+    * {
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
 
-        /* FUNDO AZUL PASTEL */
-        body {
-            min-height: 100vh;
-            padding: 3rem 2rem;
+    /* FUNDO — MESMO DA PÁGINA PRINCIPAL */
+    body {
+        min-height: 100vh;
+        padding: 3rem 2rem;
 
-            background: linear-gradient(
-                135deg,
-                #e9f0ff,
-                #dfe9ff,
-                #d6e4ff,
-                #e0f2ff
-            );
-            background-size: 400% 400%;
-            animation: gradientMove 18s ease infinite;
-        }
+        background: linear-gradient(
+            135deg,
+            #fff1c1,
+            #ffd6a5,
+            #ffeadb
+        );
+        background-size: 300% 300%;
+        animation: gradientMove 12s ease infinite;
+    }
 
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+    @keyframes gradientMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
 
-        /* CARD PRINCIPAL */
-        .glass-container {
-            background: rgba(255, 255, 255, 0.78);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+    /* CARD */
+    .glass-container {
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
 
-            border-radius: 28px;
-            padding: 2.2rem;
+        border-radius: 28px;
+        padding: 2.2rem;
 
-            box-shadow:
-                0 30px 60px rgba(90, 120, 200, 0.25),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.45);
-        }
+        box-shadow:
+            0 25px 55px rgba(255, 180, 90, 0.28),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+    }
 
-        /* TÍTULO */
-        .page-title {
-            font-weight: 800;
-            letter-spacing: 0.8px;
-            margin-bottom: 2rem;
+    /* TÍTULO — MESMO GRADIENTE */
+    .page-title {
+        font-weight: 800;
+        letter-spacing: 0.8px;
+        margin-bottom: 2rem;
 
-            background: linear-gradient(
-                90deg,
-                #5f7cff,
-                #7aa2ff,
-                #9bbcff
-            );
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        background: linear-gradient(
+            90deg,
+            #f6c453,
+            #f28b6b
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 
-        /* TABELA */
-        .table {
-            border-collapse: separate;
-            border-spacing: 0 14px;
-        }
+    /* TABELA */
+    .table {
+        border-collapse: separate;
+        border-spacing: 0 14px;
+    }
 
-        .table thead th {
-            border: none;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.9px;
-            color: #6d7fb8;
-        }
+    .table thead th {
+        border: none;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.9px;
+        color: #a16207;
+    }
 
-        .table tbody tr {
-            background: rgba(255, 255, 255, 0.92);
-            border-radius: 18px;
-            box-shadow: 0 10px 25px rgba(120, 150, 255, 0.18);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
+    .table tbody tr {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 18px;
+        box-shadow: 0 8px 20px rgba(255, 180, 90, 0.22);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
 
-        .table tbody tr:hover {
-            transform: translateY(-3px) scale(1.002);
-            box-shadow: 0 18px 40px rgba(120, 150, 255, 0.32);
-        }
+    .table tbody tr:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 34px rgba(255, 160, 70, 0.38);
+    }
 
-        .table tbody td {
-            border: none;
-            padding: 0.95rem;
-            vertical-align: middle;
-            color: #3c4a7a;
-        }
+    .table tbody td {
+        border: none;
+        padding: 0.95rem;
+        vertical-align: middle;
+        color: #7c2d12;
+    }
 
-        .table tbody tr td:first-child {
-            border-radius: 18px 0 0 18px;
-        }
+    /* BADGE ID */
+    .badge-id {
+        background: linear-gradient(
+            135deg,
+            #ffe29f,
+            #ffd6a5
+        );
+        color: #92400e;
+        padding: 0.3rem 0.65rem;
+        border-radius: 12px;
+        font-size: 0.72rem;
+        font-weight: 700;
+    }
 
-        .table tbody tr td:last-child {
-            border-radius: 0 18px 18px 0;
-        }
+    /* PLATAFORMA */
+    .badge-platform {
+        background: linear-gradient(
+            135deg,
+            #ffddb0,
+            #ffe9c7
+        );
+        color: #7c2d12;
+        font-size: 0.7rem;
+        font-weight: 600;
+        border-radius: 12px;
+        padding: 0.35rem 0.7rem;
+    }
 
-        /* BADGE ID */
-        .badge-id {
-            background: linear-gradient(
-                135deg,
-                #c7d6ff,
-                #b1c4ff
-            );
-            color: #3f57a8;
-            padding: 0.3rem 0.65rem;
-            border-radius: 12px;
-            font-size: 0.72rem;
-            font-weight: 700;
-        }
+    /* DATAS */
+    .data-column {
+        font-size: 0.72rem;
+        color: #9a3412;
+    }
 
-        /* PLATAFORMA */
-        .badge-platform {
-            background: linear-gradient(
-                135deg,
-                #b9e7ff,
-                #d4f1ff
-            );
-            color: #1f5f85;
-            font-size: 0.7rem;
-            font-weight: 600;
-            border-radius: 12px;
-            padding: 0.35rem 0.7rem;
-        }
+    /* BOTÃO — MESMO LARANJA DE DESTAQUE */
+    .btn-soft {
+        background: linear-gradient(
+            135deg,
+            #ffb347,
+            #ff8c42,
+            #ff6f3c
+        );
+        border: none;
+        border-radius: 20px;
+        padding: 0.7rem 1.9rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #ffffff;
 
-        /* DATAS */
-        .data-column {
-            font-size: 0.72rem;
-            color: #7b8fce;
-        }
+        box-shadow:
+            0 14px 36px rgba(255,140,66,0.5),
+            inset 0 1px 0 rgba(255,255,255,0.35);
 
-        /* BOTÃO */
-        .btn-soft {
-            background: linear-gradient(
-                135deg,
-                #7aa2ff,
-                #a7c4ff,
-                #c2ddff
-            );
-            border: none;
-            border-radius: 16px;
-            padding: 0.55rem 1.4rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #243b7a;
-            box-shadow: 0 10px 28px rgba(120, 150, 255, 0.35);
-            transition: all 0.25s ease;
-        }
+        transition:
+            background-position 0.4s ease,
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+    }
 
-        .btn-soft:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 16px 40px rgba(120, 150, 255, 0.55);
-            color: #1e2f63;
-        }
-    </style>
+    .btn-soft:hover {
+        background-position: right center;
+        transform: translateY(-2px);
+        box-shadow:
+            0 20px 48px rgba(255,140,66,0.65),
+            inset 0 1px 0 rgba(255,255,255,0.45);
+        color: #ffffff;
+    }
+</style>
+
+
 </head>
 
 <body>
