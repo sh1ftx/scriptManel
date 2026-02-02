@@ -7,6 +7,16 @@ Projeto desenvolvido para fins **didáticos e avaliativos** na disciplina *Progr
 Instituição: IFPI – Campus Pedro II  
 Professor responsável: Manuel Gonçalves da Silva Neto  
 
+## 👥 Equipe e Atribuições
+
+- Kayky Rodrigues Silva: Líder da equipe, organização das tarefas e formatação da apresentação.
+- KaykI Ivan: Criação do repositório, base do projeto e orientação técnica/estilização.
+- Vinycius Huellyson: Implementação da lógica de verificação de duplicidade.
+- Gleison de Oliveira: Desenvolvimento do serviço REST (JSON).
+- Lincoln César: Implementação da página de detalhes de registros.
+- Fernando da Silva: Auxílio na criação do relatório em PDF.
+- Ananias Carlos: Desenvolvimento do sistema de login simples.
+
 ---
 
 ## 1. Contexto acadêmico e propósito  
