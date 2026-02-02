@@ -3,6 +3,7 @@
 const express = require("express");
 const path = require("path");
 const session = require("express-session");
+const PDFDocument = require("pdfkit");
 const { Amigo, Jogo, Emprestimo } = require("./models");
 const { Op } = require("sequelize");
 
@@ -86,18 +87,14 @@ app.post("/amigos/novo", async (req, res) => {
     const { nome, email } = req.body;
 
     const [user, created] = await Amigo.findOrCreate({
-        where: {
-            email: email,
-        },
-        defaults: {
-            nome: nome,
-        },
+        where: { email },
+        defaults: { nome },
     });
 
     if (!created) {
         return res.render("amigos/novo", {
             nome,
-            erro: "O email digitado ja está em uso!",
+            erro: "O email digitado já está em uso!",
         });
     }
 
@@ -116,42 +113,88 @@ app.post("/amigos/editar/:id", async (req, res) => {
 
     const invalidEmail = await Amigo.findOne({
         where: {
-            email: email,
+            email,
             id: { [Op.ne]: id },
         },
     });
 
     if (invalidEmail) {
         const amigo = await Amigo.findByPk(id);
-
         return res.render("amigos/editar", {
             amigo,
-            erro: "O email digitado ja está em uso!",
+            erro: "O email digitado já está em uso!",
         });
     }
 
-    await Amigo.update({ nome, email }, { where: { id: id } });
+    await Amigo.update({ nome, email }, { where: { id } });
     res.redirect("/amigos");
 });
 
-/* DELETE COM TRATAMENTO */
 app.post("/amigos/excluir/:id", async (req, res) => {
-    const id = req.params.id;
-
     try {
-        await Amigo.destroy({ where: { id } });
-        return res.redirect("/amigos");
+        await Amigo.destroy({ where: { id: req.params.id } });
+        res.redirect("/amigos");
     } catch (error) {
-        console.error(error);
-
         const amigos = await Amigo.findAll({ order: [["id", "ASC"]] });
-
-        return res.render("amigos/index", {
+        res.render("amigos/index", {
             amigos,
             erro: "Não é possível apagar este amigo porque existem jogos vinculados a ele.",
         });
     }
 });
+
+/* =======================
+   RELATÓRIO PDF — AMIGOS
+======================= */
+app.get("/pdf/amigos", async (req, res) => {
+    const amigos = await Amigo.findAll({ order: [["nome", "ASC"]] });
+
+    const doc = new PDFDocument({ size: "A4", margin: 40 });
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+        "Content-Disposition",
+        "inline; filename=relatorio-amigos.pdf",
+    );
+
+    doc.pipe(res);
+
+    // Cabeçalho
+    doc
+        .fontSize(18)
+        .text("Instituto Federal do Piauí - IFPI", { align: "center" })
+        .moveDown(0.5);
+
+    doc
+        .fontSize(14)
+        .text("Relatório de Amigos Cadastrados", { align: "center" })
+        .moveDown(1.5);
+
+    doc
+        .fontSize(12)
+        .text(`Total de registros: ${amigos.length}`)
+        .moveDown();
+
+    // Listagem
+    amigos.forEach((amigo, index) => {
+        doc
+            .fontSize(11)
+            .text(`${index + 1}. Nome: ${amigo.nome}`)
+            .text(`   Email: ${amigo.email}`)
+            .moveDown(0.5);
+    });
+
+    // Rodapé
+    doc
+        .moveDown(2)
+        .fontSize(10)
+        .text(`Gerado em: ${new Date().toLocaleDateString("pt-BR")}`, {
+            align: "right",
+        });
+
+    doc.end();
+});
+
 
 /* =======================
    JOGOS
@@ -161,7 +204,6 @@ app.get("/jogos", async (req, res) => {
         include: [{ model: Amigo, as: "dono" }],
         order: [["id", "ASC"]],
     });
-
     res.render("jogos/index", { jogos, erro: null });
 });
 
@@ -171,7 +213,6 @@ app.get("/api/jogos", async (req, res) => {
         include: [{ model: Amigo, as: "dono" }],
         order: [["id", "ASC"]],
     });
-
     res.json(jogos);
 });
 
@@ -184,59 +225,6 @@ app.post("/jogos/novo", async (req, res) => {
     const { titulo, plataforma, amigoId } = req.body;
     await Jogo.create({ titulo, plataforma, amigoId: Number(amigoId) });
     res.redirect("/jogos");
-});
-
-app.get("/jogos/visualizar/:id", async (req, res) => {
-    const jogo = await Jogo.findByPk(req.params.id, {
-        include: [
-            { model: Amigo, as: "dono" },
-            {
-                model: Emprestimo,
-                as: "emprestimos",
-                include: [{ model: Amigo, as: "amigo" }],
-            },
-        ],
-    });
-
-    if (!jogo) return res.status(404).send("Jogo não encontrado");
-    res.render("jogos/detalhes", { jogo });
-});
-
-app.get("/jogos/editar/:id", async (req, res) => {
-    const jogo = await Jogo.findByPk(req.params.id);
-    if (!jogo) return res.status(404).send("Jogo não encontrado");
-
-    const amigos = await Amigo.findAll({ order: [["nome", "ASC"]] });
-    res.render("jogos/editar", { jogo, amigos });
-});
-
-app.post("/jogos/editar/:id", async (req, res) => {
-    const { titulo, plataforma, amigoId } = req.body;
-    await Jogo.update(
-        { titulo, plataforma, amigoId: Number(amigoId) },
-        { where: { id: req.params.id } },
-    );
-    res.redirect("/jogos");
-});
-
-/*  DELETE JOGO COM TRATAMENTO */
-app.post("/jogos/excluir/:id", async (req, res) => {
-    try {
-        await Jogo.destroy({ where: { id: req.params.id } });
-        return res.redirect("/jogos");
-    } catch (error) {
-        console.error(error);
-
-        const jogos = await Jogo.findAll({
-            include: [{ model: Amigo, as: "dono" }],
-            order: [["id", "ASC"]],
-        });
-
-        return res.render("jogos/index", {
-            jogos,
-            erro: "Não é possível apagar este jogo porque ele possui empréstimos vinculados.",
-        });
-    }
 });
 
 /* =======================
@@ -280,4 +268,6 @@ app.post("/emprestimos/excluir/:id", async (req, res) => {
 /* =======================
    SERVER
 ======================= */
-app.listen(PORT, () => console.log(`Funfando em http://localhost:${PORT}`));
+app.listen(PORT, () =>
+    console.log(`Funfando em http://localhost:${PORT}`),
+);
