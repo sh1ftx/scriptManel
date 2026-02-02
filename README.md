@@ -1,4 +1,35 @@
+## Informações do Projeto
 
+![status](https://img.shields.io/badge/status-concluído-9AD0C2?style=for-the-badge)
+![tipo](https://img.shields.io/badge/tipo-projeto%20acadêmico-CDB4DB?style=for-the-badge)
+![arquitetura](https://img.shields.io/badge/arquitetura-MVC-B8C0FF?style=for-the-badge)
+![normas](https://img.shields.io/badge/normas-IEEE%20%7C%20ISO/IEC-A0C4FF?style=for-the-badge)
+
+---
+
+## Tecnologias e Ferramentas
+
+![Node.js](https://img.shields.io/badge/Node.js-18.x-A7C957?style=for-the-badge&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-4.x-DAD7CD?style=for-the-badge&logo=express&logoColor=black)
+![Sequelize](https://img.shields.io/badge/Sequelize-ORM-8ECAE6?style=for-the-badge&logo=sequelize&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-3.x-BBD0FF?style=for-the-badge&logo=sqlite&logoColor=black)
+
+---
+
+## Camada de Apresentação
+
+![EJS](https://img.shields.io/badge/EJS-Template-F1FAEE?style=for-the-badge)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5-DEC9E9?style=for-the-badge&logo=bootstrap&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS3-Estilização-CAF0F8?style=for-the-badge&logo=css3&logoColor=black)
+
+---
+
+## Recursos Implementados
+
+![Login](https://img.shields.io/badge/autenticação-didática-FFD6A5?style=for-the-badge)
+![REST](https://img.shields.io/badge/API-REST-EAE4E9?style=for-the-badge)
+![PDF](https://img.shields.io/badge/relatórios-PDF-E5989B?style=for-the-badge)
+![CRUD](https://img.shields.io/badge/operações-CRUD-BEE1E6?style=for-the-badge)
 # Ludoteca: Sistema de Gestão de Acervo Lúdico
 
 ## Documentação técnica acadêmica orientada por normas de engenharia de software  
