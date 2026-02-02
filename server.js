@@ -19,6 +19,24 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
+// REST jogos
+app.get("/api/jogos", async (req, res) => {
+    const jogos = await Jogo.findAll({
+        include: [{ model: Amigo, as: "dono" }],
+        order: [["id", "ASC"]],
+    });
+
+    res.json(jogos);
+});
+
+app.get("/api-consumo", async (req, res) => {
+    const response = await fetch("http://localhost:3005/api/jogos");
+
+    const jogosDaApi = await response.json();
+
+    res.render("api/index", { jogos: jogosDaApi });
+});
+
 /* =======================
    SESSÃO / LOGIN
 ======================= */
@@ -73,27 +91,30 @@ app.get("/amigos", async (req, res) => {
     res.render("amigos/index", { amigos, erro: null });
 });
 
-// REST amigos
-app.get("/api/amigos", async (req, res) => {
-    const amigos = await Amigo.findAll({ order: [["id", "ASC"]] });
-    res.json(amigos);
-});
-
 app.get("/amigos/novo", (req, res) => {
-    res.render("amigos/novo", { erro: null, nome: "" });
+    res.render("amigos/novo", { erro: null, nome: "", email: "" });
 });
 
 app.post("/amigos/novo", async (req, res) => {
     const { nome, email } = req.body;
 
-    const [user, created] = await Amigo.findOrCreate({
+    if (!nome.trim() || !email.trim()) {
+        return res.render("amigos/novo", {
+            nome: "",
+            email,
+            erro: "Preencha o nome corretamente!",
+        });
+    }
+
+    const [user, emailFree] = await Amigo.findOrCreate({
         where: { email },
         defaults: { nome },
     });
 
-    if (!created) {
+    if (!emailFree) {
         return res.render("amigos/novo", {
             nome,
+            email,
             erro: "O email digitado já está em uso!",
         });
     }
@@ -110,6 +131,7 @@ app.get("/amigos/editar/:id", async (req, res) => {
 app.post("/amigos/editar/:id", async (req, res) => {
     const { id } = req.params;
     const { nome, email } = req.body;
+    const amigo = await Amigo.findByPk(id);
 
     const invalidEmail = await Amigo.findOne({
         where: {
@@ -118,8 +140,14 @@ app.post("/amigos/editar/:id", async (req, res) => {
         },
     });
 
+    if (!nome.trim() || !email.trim()) {
+        return res.render("amigos/editar", {
+            amigo,
+            erro: "Preencha o nome corretamente!",
+        });
+    }
+
     if (invalidEmail) {
-        const amigo = await Amigo.findByPk(id);
         return res.render("amigos/editar", {
             amigo,
             erro: "O email digitado já está em uso!",
@@ -167,27 +195,21 @@ app.get("/pdf/relatorio", async (req, res) => {
     doc.pipe(res);
 
     /* ===== CABEÇALHO ===== */
-    doc
-        .fontSize(18)
+    doc.fontSize(18)
         .text("Instituto Federal do Piauí - IFPI", { align: "center" })
         .moveDown(0.5);
 
-    doc
-        .fontSize(14)
+    doc.fontSize(14)
         .text("Relatório Geral do Sistema", { align: "center" })
         .moveDown(2);
 
     /* ===== AMIGOS ===== */
     doc.fontSize(13).text("1. Amigos Cadastrados").moveDown(0.5);
 
-    doc
-        .fontSize(11)
-        .text(`Total de amigos: ${amigos.length}`)
-        .moveDown();
+    doc.fontSize(11).text(`Total de amigos: ${amigos.length}`).moveDown();
 
     amigos.forEach((a, i) => {
-        doc
-            .fontSize(10)
+        doc.fontSize(10)
             .text(`${i + 1}. Nome: ${a.nome}`)
             .text(`   Email: ${a.email}`)
             .moveDown(0.3);
@@ -199,14 +221,10 @@ app.get("/pdf/relatorio", async (req, res) => {
     /* ===== JOGOS ===== */
     doc.fontSize(13).text("2. Jogos Cadastrados").moveDown(0.5);
 
-    doc
-        .fontSize(11)
-        .text(`Total de jogos: ${jogos.length}`)
-        .moveDown();
+    doc.fontSize(11).text(`Total de jogos: ${jogos.length}`).moveDown();
 
     jogos.forEach((j, i) => {
-        doc
-            .fontSize(10)
+        doc.fontSize(10)
             .text(`${i + 1}. Título: ${j.titulo}`)
             .text(`   Plataforma: ${j.plataforma}`)
             .text(`   Dono: ${j.dono ? j.dono.nome : "Sem dono"}`)
@@ -214,8 +232,7 @@ app.get("/pdf/relatorio", async (req, res) => {
     });
 
     /* ===== RODAPÉ ===== */
-    doc
-        .moveDown(2)
+    doc.moveDown(2)
         .fontSize(9)
         .text(
             `Relatório gerado em: ${new Date().toLocaleDateString("pt-BR")}`,
@@ -234,15 +251,6 @@ app.get("/jogos", async (req, res) => {
         order: [["id", "ASC"]],
     });
     res.render("jogos/index", { jogos, erro: null });
-});
-
-// REST jogos
-app.get("/api/jogos", async (req, res) => {
-    const jogos = await Jogo.findAll({
-        include: [{ model: Amigo, as: "dono" }],
-        order: [["id", "ASC"]],
-    });
-    res.json(jogos);
 });
 
 app.get("/jogos/novo", async (req, res) => {
@@ -305,12 +313,11 @@ app.post("/jogos/editar/:id", async (req, res) => {
         },
         {
             where: { id: req.params.id },
-        }
+        },
     );
 
     res.redirect("/jogos");
 });
-
 
 /* =======================
    EMPRÉSTIMOS
@@ -353,6 +360,4 @@ app.post("/emprestimos/excluir/:id", async (req, res) => {
 /* =======================
    SERVER
 ======================= */
-app.listen(PORT, () =>
-    console.log(`Funfando em http://localhost:${PORT}`),
-);
+app.listen(PORT, () => console.log(`Funfando em http://localhost:${PORT}`));
