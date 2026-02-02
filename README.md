@@ -1,6 +1,7 @@
 # 🎮 Sistema de Gerenciamento de Jogos e Empréstimos
 
-> **Projeto desenvolvido para a disciplina de Programação para Internet II** > **Professor:** Manuel Gonçalves da Silva Neto  
+> **Projeto desenvolvido para a disciplina de Programação para Internet II**
+> **Professor:** Manuel Gonçalves da Silva Neto  
 > **Instituição:** IFPI - Campus Pedro II
 
 Este projeto é uma aplicação web completa para gestão de coleções de jogos, cadastro de amigos e controle de empréstimos, desenvolvida em Node.js com Sequelize e SQLite, seguindo o padrão arquitetural MVC.
