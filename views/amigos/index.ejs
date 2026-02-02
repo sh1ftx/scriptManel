@@ -14,13 +14,7 @@
         body {
             min-height: 100vh;
             padding: 3rem 2rem;
-
-            background: linear-gradient(
-                135deg,
-                #f3e8ff,
-                #e9d5ff,
-                #f5f3ff
-            );
+            background: linear-gradient(135deg, #f3e8ff, #e9d5ff, #f5f3ff);
             background-size: 300% 300%;
             animation: gradientMove 14s ease infinite;
         }
@@ -39,32 +33,19 @@
         .page-title {
             font-weight: 800;
             font-size: 2.4rem;
-            letter-spacing: 0.8px;
             margin-bottom: 1.4rem;
-
-            background: linear-gradient(
-                90deg,
-                #a855f7,
-                #d946ef
-            );
+            background: linear-gradient(90deg, #a855f7, #d946ef);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-
-            text-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }
 
         .glass-card {
             margin-top: 2rem;
             padding: 2rem;
-
             border-radius: 24px;
             background: rgba(255, 255, 255, 0.65);
             backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-
-            box-shadow:
-                0 20px 45px rgba(0, 0, 0, 0.12),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
         }
 
         .top-actions {
@@ -74,6 +55,7 @@
             margin-top: 1.5rem;
         }
 
+        /* BOTÕES TOPO */
         .btn-soft {
             padding: 0.55rem 1.1rem;
             border-radius: 14px;
@@ -87,36 +69,25 @@
         }
 
         .btn-soft:hover {
-            background: rgba(255, 255, 255, 0.95);
             transform: translateY(-1px);
-        }
-
-        .btn-soft.btn-primary-soft {
-            color: #fff;
-        }
-
-        .btn-soft.btn-primary-soft:hover {
-            background: linear-gradient(
-                135deg,
-                #c084fc,
-                #e879f9
-            );
-            color: #fff;
-            transform: translateY(-1px);
-            box-shadow: 0 8px 22px rgba(168, 85, 247, 0.45);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            color: #333;
+            background: rgba(255, 255, 255, 0.85);
         }
 
         .btn-primary-soft {
             border: none;
             color: #fff;
             font-weight: 600;
-            background: linear-gradient(
-                135deg,
-                #c084fc,
-                #e879f9
-            );
+            background: linear-gradient(135deg, #c084fc, #e879f9);
         }
 
+        .btn-primary-soft:hover {
+            background: linear-gradient(135deg, #a855f7, #d946ef);
+            color: #fff;
+        }
+
+        /* TABELA */
         .table {
             margin-top: 1.5rem;
             border-collapse: separate;
@@ -124,11 +95,10 @@
         }
 
         .table thead th {
-            border: none;
             font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.6px;
             color: #6b7280;
+            border: none;
         }
 
         .table tbody tr {
@@ -138,8 +108,8 @@
         }
 
         .table tbody td {
-            border: none;
             padding: 0.8rem;
+            border: none;
             vertical-align: middle;
         }
 
@@ -155,7 +125,6 @@
             border-radius: 12px;
             padding: 0.35rem 0.7rem;
             font-size: 0.75rem;
-            font-weight: 500;
         }
 
         .btn-delete {
@@ -165,6 +134,33 @@
             border-radius: 12px;
             padding: 0.35rem 0.7rem;
             font-size: 0.75rem;
+        }
+
+        /* BOTÃO PDF DESTAQUE */
+        .pdf-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 2.5rem;
+        }
+
+        .btn-pdf-highlight {
+            padding: 0.9rem 2.4rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 18px;
+            text-decoration: none;
+            color: #fff;
+            border: none;
+            background: linear-gradient(135deg, #c084fc, #e879f9);
+            box-shadow: 0 14px 38px rgba(168, 85, 247, 0.45);
+            transition: all 0.3s ease;
+        }
+
+        .btn-pdf-highlight:hover {
+            transform: translateY(-3px) scale(1.02);
+            background: linear-gradient(135deg, #a855f7, #d946ef);
+            box-shadow: 0 22px 55px rgba(168, 85, 247, 0.6);
+            color: #fff;
         }
     </style>
 </head>
@@ -185,10 +181,6 @@
         <a href="/amigos/novo" class="btn-soft btn-primary-soft">+ Novo Amigo</a>
         <a href="/jogos" class="btn-soft">Jogos</a>
         <a href="/emprestimos" class="btn-soft">Empréstimos</a>
-        <a href="/api-consumo" class="btn-soft">Ver JSON</a>
-        <!-- <a href="/pdf/amigos" target="_blank" class="btn-soft">PDF</a> -->
-        <a href="/pdf/relatorio" target="_blank" class="btn-soft">PDF</a>
-
     </div>
 
     <div class="glass-card">
@@ -219,6 +211,13 @@
                 <% }) %>
             </tbody>
         </table>
+
+        <!-- BOTÃO PDF EM DESTAQUE -->
+        <div class="pdf-wrapper">
+            <a href="/pdf/relatorio" target="_blank" class="btn-pdf-highlight">
+                📄 Gerar Relatório em PDF
+            </a>
+        </div>
     </div>
 
 </div>
