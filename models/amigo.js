@@ -1,18 +1,28 @@
-'use strict';
+"use strict";
 module.exports = (sequelize, DataTypes) => {
-  const Amigo = sequelize.define(
-    'Amigo',
-    {
-      nome: { type: DataTypes.STRING, allowNull: false },
-      email: { type: DataTypes.STRING, allowNull: false }
-    },
-    { tableName: 'Amigo' }
-  );
-  
-  Amigo.associate = function(models) {
-  Amigo.hasMany(models.Jogo, { foreignKey: 'amigoId', as: 'jogos' });
-  Amigo.hasMany(models.Emprestimo, { foreignKey: 'amigoId', as: 'emprestimos' });
-  };
-  
-  return Amigo;
+    const Amigo = sequelize.define(
+        "Amigo",
+        {
+            nome: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            email: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                unique: true,
+            },
+        },
+        { tableName: "Amigo" },
+    );
+
+    Amigo.associate = function (models) {
+        Amigo.hasMany(models.Jogo, { foreignKey: "amigoId", as: "jogos" });
+        Amigo.hasMany(models.Emprestimo, {
+            foreignKey: "amigoId",
+            as: "emprestimos",
+        });
+    };
+
+    return Amigo;
 };
